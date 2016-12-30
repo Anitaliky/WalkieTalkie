@@ -9,13 +9,13 @@ namespace WalkieTalkieServer
     public class Server
     {
         private Session session;
-        private Dictionary<long, Session> clients;
+        private Dictionary<long, Client> clients;
         private Dictionary<ClientOperation, Action<Session, InPacket>> handlers;
 
         public Server()
         {
             session = new Session();
-            clients = new Dictionary<long, Session>();
+            clients = new Dictionary<long, Client>();
             handlers = new Dictionary<ClientOperation, Action<Session, InPacket>>();
 
             session.Listen(4242);
@@ -27,12 +27,17 @@ namespace WalkieTalkieServer
             CreateHandlers();
         }
 
+        public Client GetClient(long id)
+        {
+            return clients[id];
+        }
+
         #region Events
 
         private void OnClientConnected(object sender, SessionEventArgs e)
         {
-            clients.Add(e.Session.Id, e.Session);
-            Console.WriteLine("Client connceted!");
+            clients.Add(e.Session.Id, new Client(e.Session));
+            Console.WriteLine("Socket connceted!");
         }
 
         private void OnClientDisconnected(object sender, SessionEventArgs e)

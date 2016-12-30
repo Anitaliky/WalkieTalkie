@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\Query.cs" />
     <Compile Include="Data\Schema.cs" />

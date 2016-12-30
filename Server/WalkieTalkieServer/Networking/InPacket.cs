@@ -19,7 +19,6 @@ namespace Common.Networking
         public InPacket(byte[] buffer)
         {
             m_buffer = buffer;
-            Console.WriteLine(m_buffer);
             m_position = 0;
         }
 

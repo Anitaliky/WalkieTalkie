@@ -1,15 +1,13 @@
-﻿using Data;
-using System;
-using System.Threading;
+﻿using System.Threading;
 
 namespace WalkieTalkieServer
 {
     class Program
     {
+        public static Server Server = new Server();
+
         static void Main(string[] args)
         {
-            new Server();
-            
             Thread.Sleep(Timeout.Infinite);
         }
     }

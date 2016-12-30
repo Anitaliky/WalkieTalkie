@@ -14,13 +14,6 @@ namespace Common.Networking
         protected string m_ip;
         protected ushort m_host;
         private uint m_lastConnectedId;
-        private bool m_isConnected;
-
-        public bool IsConnected
-        {
-            get { return m_isConnected; }
-            set { m_isConnected = value; }
-        }
 
         public Session() : this(null) { }
 
@@ -30,7 +23,6 @@ namespace Common.Networking
             m_socket = socket;
             m_recvBuffer = new byte[MaxBufferLength];
             m_lastConnectedId = 0;
-            m_isConnected = false;
         }
 
         ~Session()
@@ -183,28 +175,5 @@ namespace Common.Networking
         }
 
         #endregion
-
-        public Query ExecuteQuery(string cmd)
-        {
-            using (Schema schema = Database.Instance.Connect("walkietalkie"))
-            {
-                using (Query query = schema.ExecuteQuery(cmd))
-                    return query;
-            }
-        }
-
-        public long ExecuteNonQuery(string cmd)
-        {
-            using (Schema schema = Database.Instance.Connect("walkietalkie"))
-            {
-                return schema.ExecuteNonQuery(cmd);
-            }
-        }
-
-        //Checks if the row has been actually inserted
-        //public bool CheckExecuteNonQuery(long id, string column, string table)
-        //{
-        //    Query query = ExecuteQuery($"SELECT {column} FROM {table} WHERE")
-        //}
     }
 }
