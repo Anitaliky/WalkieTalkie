@@ -61,7 +61,7 @@ namespace WalkieTalkieServer
         private void CreateHandlers()
         {
             handlers.Add(ClientOperation.SIGN_IN, OperationHandlers.SignIn);
-            //handlers.Add(ClientOperation.SIGN_UP, OperationHandlers.SignUp);
+            handlers.Add(ClientOperation.SIGN_UP, OperationHandlers.SignUp);
         }
     }
 }
