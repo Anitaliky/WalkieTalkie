@@ -56,16 +56,21 @@ public class Session {
     public void Send(OutPacket packet) throws IOException {
         socket.getOutputStream().write(packet.toByteArray());
     }
-
+    
     public void SignIn(String username, String password) throws IOException {
         try (OutPacket packet = new OutPacket(ClientOperation.SIGNIN)) {
             packet.writeString(username);
             packet.writeString(password);
             Send(packet);
         }
+        System.out.println("Sign in packet!!!!!!!!!!!!!!!");
     }
 
     public void SignUp(String username, String password) throws IOException {
-
+        try (OutPacket packet = new OutPacket(ClientOperation.SIGNUP)) {
+            packet.writeString(username);
+            packet.writeString(password);
+            Send(packet);
+        }
     }
 }

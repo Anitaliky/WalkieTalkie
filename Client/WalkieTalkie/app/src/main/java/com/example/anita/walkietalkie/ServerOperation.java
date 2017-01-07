@@ -22,6 +22,7 @@ public enum ServerOperation {
                 @Override
                 public void run() {
                     TextView messageView = (TextView) activity.findViewById(R.id.messageView);
+                    System.out.println("signin answer: " + result);
                     switch (result) {
                         case 0: //success
                             messageView.setText
@@ -51,30 +52,36 @@ public enum ServerOperation {
     SIGNUP(1) {
         @Override
         public void handle(DataInputStream packet, final Activity activity, final Handler handler) throws IOException {
-            byte result = packet.readByte();
-            TextView messageView = (TextView) activity.findViewById(R.id.messageView);
-            switch (result) {
-                case 0: //success
-                    messageView.setText
-                            ("Successful connected!");
-                    break;
-                case 4: //Invalid username
-                    messageView.setText
-                            ("Invalid username");
-                    break;
-                case 5: //Username is already exists
-                    messageView.setText
-                            ("Username is already exists. Try again");
-                    break;
-                case 6: //invalid password
-                    messageView.setText
-                            ("invalid password");
-                    break;
-                case 7: //other
-                    messageView.setText
-                            ("something went wrong");
-                    break;
-            }
+            final byte result = packet.readByte();
+            //do it every time
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    TextView messageView = (TextView) activity.findViewById(R.id.messageView);
+                    switch (result) {
+                        case 0: //success
+                            messageView.setText
+                                    ("Successful connected!");
+                            break;
+                        case 4: //Invalid username
+                            messageView.setText
+                                    ("Invalid username");
+                            break;
+                        case 5: //Username is already exists
+                            messageView.setText
+                                    ("Username is already exists. Try again");
+                            break;
+                        case 6: //invalid password
+                            messageView.setText
+                                    ("invalid password");
+                            break;
+                        case 7: //other
+                            messageView.setText
+                                    ("something went wrong");
+                            break;
+                    }
+                }
+            });
         }
     },
     DEFAULT(-1) {
