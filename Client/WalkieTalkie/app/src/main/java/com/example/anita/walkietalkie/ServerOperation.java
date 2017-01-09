@@ -40,10 +40,6 @@ public enum ServerOperation {
                             messageView.setText
                                     ("This user is already connected");
                             break;
-                        case 7: //other
-                            messageView.setText
-                                    ("something went wrong");
-                            break;
                     }
                 }
             });

@@ -15,7 +15,7 @@ import java.net.Socket;
 
 public class Session {
     private static Session instance;
-    private static final String address = "192.168.1.29";
+    private static final String address = "192.168.43.246";
     private static final int port = 4242;
     private Socket socket;
 
@@ -34,20 +34,23 @@ public class Session {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    DataInputStream packet = new DataInputStream(socket.getInputStream());
-                    byte op = packet.readByte();
-                    ServerOperation opcode = ServerOperation.DEFAULT;
-                    for (ServerOperation operation : ServerOperation.values())
-                        if (op == operation.getValue()) {
-                            opcode = operation;
-                            break;
-                        }
-                    if (opcode == ServerOperation.DEFAULT)
-                        System.out.println("Unhandled operation " + op);
-                    opcode.handle(packet, activity, handler);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                while (true) {
+                    try {
+                        DataInputStream packet = new DataInputStream(socket.getInputStream());
+                        System.out.println("message from server!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        byte op = packet.readByte();
+                        ServerOperation opcode = ServerOperation.DEFAULT;
+                        for (ServerOperation operation : ServerOperation.values())
+                            if (op == operation.getValue()) {
+                                opcode = operation;
+                                break;
+                            }
+                        if (opcode == ServerOperation.DEFAULT)
+                            System.out.println("Unhandled operation " + op);
+                        opcode.handle(packet, activity, handler);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }).start();
